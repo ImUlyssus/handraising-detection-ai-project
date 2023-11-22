@@ -19,8 +19,11 @@ const SignUp = () => {
                 email,
                 password,
             });
-
-            window.location.href = '/';
+            localStorage.setItem('user', JSON.stringify(response.data));
+            toast.success("Registration successful! Redirecting to home page.")
+            setTimeout(() => {
+                window.location.href = '/';
+              }, 3000);
             // Optionally, you can redirect the user or perform any other actions after successful sign-up.
         } catch (error) {
             const errorMessage = error.response?.data?.message || 'An error occurred';

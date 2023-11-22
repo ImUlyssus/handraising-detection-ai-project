@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axiosInstance from '../utilities/axiosInstance';
+import axios from 'axios'
 import { toast } from 'react-toastify';
 const Home = () => {
     const [userClasses, setUserClasses] = useState([]);
     const [user, setUser] = useState({ name: '' });
     const [showModal, setShowModal] = useState(false);
     const [newClassName, setNewClassName] = useState('');
+    const navigate = useNavigate();
 
     const openModal = () => {
         setShowModal(true);
@@ -17,43 +19,47 @@ const Home = () => {
     };
     const handleAddClass = async () => {
         if (newClassName.trim() === '') {
-          // You can display an error message or prevent adding an empty class
-          return toast.error("Cannot create empty class!");
+            // You can display an error message or prevent adding an empty class
+            return toast.error("Cannot create empty class!");
         }
         try {
-          // Call the backend API to add the new class
-          const response = await axiosInstance.put(`user/${user._id}`, {
-            classes: [newClassName],
-          });
-          console.log(response.data); // Log the response from the backend
-          const nonEmptyClasses = response.data.user.classes.filter(className => className.trim() !== '');
-          localStorage.setItem('user', JSON.stringify(response.data.user));
-          setUserClasses(nonEmptyClasses);
-          // Close the modal after adding the class
-          closeModal();
-        } catch (error) {
-          console.error(error.message);
-          // Handle error - display a message to the user or perform other actions.
-        }
-      };
-      const handleDeleteClass = async (className) => {
-        try {
-            // Call the backend API to delete the class
-            const response = await axiosInstance.delete(`user/${user._id}`, {
-                data: { classes: [className] },
+            // Call the backend API to add the new class
+            const response = await axiosInstance.put(`user/${user._id}`, {
+                classes: [newClassName],
             });
-          console.log(response.data); // Log the response from the backend
-          const nonEmptyClasses = response.data.user.classes.filter(className => className.trim() !== '');
-          localStorage.setItem('user', JSON.stringify(response.data.user));
-          setUserClasses(nonEmptyClasses);
-          toast.success("Deleted successfully!")
-          // Close the modal after adding the class
-          closeModal();
+            console.log(response.data); // Log the response from the backend
+            const nonEmptyClasses = response.data.user.classes.filter(className => className.trim() !== '');
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+            setUserClasses(nonEmptyClasses);
+            // Close the modal after adding the class
+            closeModal();
         } catch (error) {
-          console.error(error.message);
-          // Handle error - display a message to the user or perform other actions.
+            console.error(error.message);
+            // Handle error - display a message to the user or perform other actions.
         }
-      };
+    };
+    const handleDeleteClass = async (className) => {
+        if (window.confirm("This will delete your class history and stuff. Would you like to continue?")) {
+            try {
+                // Call the backend API to delete the class
+                const response = await axiosInstance.delete(`user/${user._id}`, {
+                    data: { classes: [className] },
+                });
+                console.log(response.data); // Log the response from the backend
+                const nonEmptyClasses = response.data.user.classes.filter(className => className.trim() !== '');
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+                setUserClasses(nonEmptyClasses);
+                toast.success("Deleted successfully!")
+                // Close the modal after adding the class
+                closeModal();
+            } catch (error) {
+                console.error(error.message);
+                // Handle error - display a message to the user or perform other actions.
+            }
+        } else {
+            event.preventDefault(); // Prevent the default behavior of the link
+        }
+    };
 
     useEffect(() => {
         // Retrieve user object from local storage
@@ -131,17 +137,9 @@ const Home = () => {
                         <div className="flex justify-between">
 
                             <button className="flex-1 bg-teal-500 px-6 py-3 text-white rounded-md mr-3 shadow-md"><Link to={`/startmodel/${className}`}>Start Model</Link></button>
-
-                            <label htmlFor="uploadInput" className="flex-1 border-2 border-teal-500 px-1 py-3 text-black rounded-md mr-3 shadow-md cursor-pointer flex items-center justify-center">
-                                Upload Recording
-                                <input
-                                    id="uploadInput"
-                                    type="file"
-                                    accept="video/*"
-                                    style={{ display: 'none' }}
-                                // onChange={(e) => handleFileUpload(e.target.files)}
-                                />
-                            </label>
+                            <button className="flex-1 border-2 border-teal-500 px-6 py-3 text-black rounded-md shadow-md mr-3">
+                                <Link to={`/uploadphoto`}>Upload Photo</Link>
+                            </button>
                             <button className="flex-1 border-2 border-teal-500 px-6 py-3 text-black rounded-md shadow-md mr-3">
                                 <Link to={`/history/${className}`}>History</Link>
                             </button>

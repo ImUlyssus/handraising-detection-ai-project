@@ -1,6 +1,11 @@
 import express from 'express'
 const router = express.Router();
 import { User } from '../models/user.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 router.post('/', async (request, response) => {
     try {
@@ -32,6 +37,17 @@ router.post('/', async (request, response) => {
         response.status(500).send({ message: error.message });
     }
 });
+
+
+
+// Function to save base64 image data to a file
+const saveBase64ImageToFile = (base64Data, filePath) => {
+    const data = base64Data.replace(/^data:image\/\w+;base64,/, '');
+    const buffer = Buffer.from(data, 'base64');
+
+    fs.writeFileSync(filePath, buffer, 'base64');
+};
+
 
 //login route
 router.post('/login', async (request, response) => {
@@ -147,5 +163,99 @@ router.delete('/:id', async (request, response) => {
         response.status(500).json({ message: 'Internal server error' });
     }
 });
+
+router.post('/saveAndClear', async (request, response) => {
+    try {
+        const { finalPredictions, userEmail, className } = request.body;
+        const historyFolderPath = '../frontend/public/History/';
+        const userEmailFolderPath = path.join(historyFolderPath, userEmail);
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hour = String(now.getHours()).padStart(2, '0');
+        const dateTimeFolder = `${year}-${month}-${day}-${hour}`;
+        
+        // New code to check for className folder
+        const classNameFolderPath = path.join(userEmailFolderPath, className);
+        if (!fs.existsSync(classNameFolderPath)) {
+            fs.mkdirSync(classNameFolderPath, { recursive: true });
+        }
+
+        const dateTimeFolderPath = path.join(classNameFolderPath, dateTimeFolder);
+        if (!fs.existsSync(dateTimeFolderPath)) {
+            fs.mkdirSync(dateTimeFolderPath);
+
+            finalPredictions.forEach((prediction, index) => {
+                const base64Image = prediction.base64Image;
+                const imageName = `image_${index + 1}.png`;
+                const imagePath = path.join(dateTimeFolderPath, imageName);
+                saveBase64ImageToFile(base64Image, imagePath);
+            });
+        } else {
+            finalPredictions.forEach((prediction, index) => {
+                const base64Image = prediction.base64Image;
+                const imageName = `image_${index + 1}.png`;
+                const imagePath = path.join(dateTimeFolderPath, imageName);
+                saveBase64ImageToFile(base64Image, imagePath);
+            });
+        }
+
+        return response.status(200).send('Records saved and cleared successfully');
+    } catch (error) {
+        console.error('Error:', error.message);
+        response.status(500).send({ message: 'Failed to save and clear records' });
+    }
+});
+
+
+router.post('/getImages', async (request, response) => {
+    try {
+        const { userEmail, className } = request.body;
+        const historyFolderPath = '../frontend/public/History/';
+        const userEmailFolderPath = path.join(historyFolderPath, userEmail);
+        const classNameFolderPath = path.join(userEmailFolderPath, className);
+
+        if (!fs.existsSync(classNameFolderPath)) {
+            return response.status(404).send({ message: 'User folder not found' });
+        }
+
+        // Fetch all folders inside the user's email folder
+        const userFolders = fs.readdirSync(classNameFolderPath);
+        const imageDetails = {};
+
+        for (const folder of userFolders) {
+            const folderPath = path.join(classNameFolderPath, folder);
+            if (fs.lstatSync(folderPath).isDirectory()) {
+                const images = fs.readdirSync(folderPath);
+                imageDetails[folder] = images;
+            }
+        }
+
+        return response.status(200).json({ imageDetails });
+    } catch (error) {
+        console.error('Error:', error.message);
+        response.status(500).send({ message: 'Failed to fetch images' });
+    }
+});
+router.post('/getImages2', async (request, response) => {
+    try {
+        const { userEmail, className, folderName } = request.body;
+        const userFolderPath = path.join('./frontend/public/History/', userEmail, className, folderName);
+        console.log(userFolderPath);
+        // console.log(../, __dirname); 
+        if (!fs.existsSync(userFolderPath)) {
+            return response.status(404).send({ message: 'User folder not found' });
+        }
+
+        const images = fs.readdirSync(userFolderPath);
+
+        return response.status(200).json({ images });
+    } catch (error) {
+        console.error('Error:', error.message);
+        response.status(500).send({ message: 'Failed to fetch images' });
+    }
+});
+
 
 export default router;

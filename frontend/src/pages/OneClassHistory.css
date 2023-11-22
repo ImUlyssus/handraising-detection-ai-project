@@ -1,0 +1,13 @@
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); /* Four columns per row */
+    gap: 20px; /* Spacing between images */
+}
+
+.grid-item {
+    /* Any additional styling for the images */
+    /* For example: */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
