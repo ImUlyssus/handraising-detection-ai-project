@@ -439,7 +439,7 @@ const StartModel = () => {
                         {starting ? 'Stop model' : 'Start model'}
                     </button>
                     <button className={`border ${audioOn ? 'border-red-500' : 'border-green-500'} font-semibold bg-white text-${audioOn ? 'red-500' : 'green'} px-4 py-4 rounded-md mb-2 w-1/2`} onClick={()=>setAudioOn(!audioOn)}>
-                        {audioOn ? 'Off' : 'On'}
+                        {audioOn ? 'Noti Off' : 'Noti On'}
                     </button>
                 </div>
             </div>

@@ -9,7 +9,7 @@ import UploadVideo from './pages/UploadVideo'
 import UploadPhoto from './pages/UploadPhoto'
 import Roboflow from './components/Roboflow'
 import StreamModel from './pages/StreamModel'
-import ExternalHTMLViewer from './ExternalHTMLViewer'
+// import ExternalHTMLViewer from './ExternalHTMLViewer'
 import OneClassHistory from './pages/OneClassHistory'
 const App = () => {
   return (
