@@ -293,7 +293,7 @@ const StartModel = () => {
             }
         }
         // const newArray = finalPredictions.length;
-        if((flag && queue-prevQueue>0 && audioOn) || (queue == 1 && audioOn)){
+        if((flag && queue-prevQueue>0 && audioOn)){
             setPrevQueue(prevQueue+1)
             const selectedRingtoneObject = availableRingtones.find(
                 (ringtone) => ringtone.id === selectedRingtone
@@ -438,9 +438,9 @@ const StartModel = () => {
                     <button className={`border ${starting ? 'border-red-500' : 'border-green-500'} font-semibold bg-white text-${starting ? 'red-500' : 'green'} px-4 py-4 rounded-md mb-2 w-1/2`} onClick={toggleModel}>
                         {starting ? 'Stop model' : 'Start model'}
                     </button>
-                    <button className={`border ${audioOn ? 'border-red-500' : 'border-green-500'} font-semibold bg-white text-${audioOn ? 'red-500' : 'green'} px-4 py-4 rounded-md mb-2 w-1/2`} onClick={()=>setAudioOn(!audioOn)}>
+                    {/* <button className={`border ${audioOn ? 'border-red-500' : 'border-green-500'} font-semibold bg-white text-${audioOn ? 'red-500' : 'green'} px-4 py-4 rounded-md mb-2 w-1/2`} onClick={()=>setAudioOn(!audioOn)}>
                         {audioOn ? 'Noti Off' : 'Noti On'}
-                    </button>
+                    </button> */}
                 </div>
             </div>
             <div className="border-b-2 border-gray-300 my-4 w-full"></div>
