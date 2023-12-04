@@ -1,49 +1,32 @@
 # Handraising Detection AI
 
-## *Kyaw Swar Hein*
+## *How to run on your local machine*
 
-**ICAI** computes the tip and total amount for a bill. The app uses the base amount and tip percentage to calculate the amount owed, and it also describes the quality of service based on the tip.
+- Clone or download this repository.
+- Open new terminal and cd frontend -> npm i -> npm run dev
+- Open another terminal and cd backend -> npm i -> npm run dev
 
-Time spent: **X** hours spent in total
+## *About this app*
+
+This is a real-time hand raising detection web-app. It tracks the students raising hand and has alert sound if it detect any raising hand for at least two seconds.
 
 ## Functionality 
 
 The following **required** functionality is completed:
 
-* [*] User can enter in a bill amount (total amount to tip on)
-* [*] User can enter a tip percentage (what % the user wants to tip).
-* [ ] The tip and total amount are updated immediately when any of the inputs changes.
-* [ ] The user sees a label or color update based on the tip amount. 
-
-The following **extensions** are implemented:
-
-* [ ] Custom colors palette selected
-* [ ] List anything else that you did to improve the app functionality or design!
-
-## Video Walkthrough
-
-Here's a walkthrough of implemented user stories:
-
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+* [ ] Hand raising detection in real time.
+* [ ] History to look back and give participation score to those who raised hands during lectures.
+* [ ] Adding class feature.
+* [ ] Deleting app feature.
 
 ## Notes
+- Some features are not fully implemented. There is a "History" feature that displays the images of the captured students who raised hands. Those images are not stored in our database. Instead, they are stored in the "public" folder.
+- On the "Start Model" page, when you click "Stop Model" button, the model is still running. Please refresh the page to completely stop the model. Sorry, I will fix that bug if I got time.
+- Our ML model is trained using the objects that is far from camera. Therefore, if you want to test our app, it is better to test with object that is at least 1 meter far from camera and at most 6 meter far from camera. You can test our app, using this video here [video]()
+- This is our app demo video [video](https://youtu.be/UIZwZPt22dI?feature=shared)
+- This is our ML model link https://universe.roboflow.com/project-qmmac/ksh-handraising-modelling/model/2
 
-Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+    Copyright 2023 Kyaw Swar Hein, Supasek Dhanabordeephat, Kitibhum Supanurat, Warinthon Phiokhaw, Tom Luca Spradau, Lukas Theuerkauf

@@ -9,7 +9,27 @@ const Home = () => {
     const [showModal, setShowModal] = useState(false);
     const [newClassName, setNewClassName] = useState('');
     const navigate = useNavigate();
-
+    useEffect(() => {
+        // Retrieve user object from local storage
+        const user = JSON.parse(localStorage.getItem('user'));
+    
+        // Redirect to /login if user object is null
+        if (!user) {
+            navigate('/login');
+            return; // Stop further execution
+        }
+    
+        // Get classes from user object
+        const classes = user?.classes || [];
+    
+        // Filter out empty strings from classes
+        const nonEmptyClasses = classes.filter(className => className.trim() !== '');
+    
+        // Set non-empty classes in the state
+        setUserClasses(nonEmptyClasses);
+        setUser(user);
+    }, [navigate]);
+    
     const openModal = () => {
         setShowModal(true);
     };
