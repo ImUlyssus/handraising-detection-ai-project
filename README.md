@@ -14,10 +14,10 @@ This is a real-time hand raising detection web-app. It tracks the students raisi
 
 The following **required** functionality is completed:
 
-* [*] Hand raising detection in real time.
-* [*] History to look back and give participation score to those who raised hands during lectures.
-* [*] Adding class feature.
-* [*] Deleting app feature.
+* Hand raising detection in real time.
+* History to look back and give participation score to those who raised hands during lectures.
+* Adding class feature.
+* Deleting app feature.
 
 ## Notes
 - Some features are not fully implemented. There is a "History" feature that displays the images of the captured students who raised hands. Those images are not stored in our database. Instead, they are stored in the "public" folder.
