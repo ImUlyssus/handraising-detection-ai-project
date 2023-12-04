@@ -22,7 +22,7 @@ The following **required** functionality is completed:
 ## Notes
 - Some features are not fully implemented. There is a "History" feature that displays the images of the captured students who raised hands. Those images are not stored in our database. Instead, they are stored in the "public" folder.
 - On the "Start Model" page, when you click "Stop Model" button, the model is still running. Please refresh the page to completely stop the model. Sorry, I will fix that bug if I got time.
-- Our ML model is trained using the objects that is far from camera. Therefore, if you want to test our app, it is better to test with object that is at least 1 meter far from camera and at most 6 meter far from camera. You can see our dataset details (https://universe.roboflow.com/project-qmmac/ksh-handraising-modelling/model/2) about the object position and camera angle to set up the correct position for better accuracy. You can test our app, using this test video here [video](https://youtu.be/afrYvmiR9OY?feature=shared)
+- Our ML model is trained using the objects that is far from camera. Therefore, if you want to test our app, it is better to test with object that is at least 1 meter far from camera and at most 6 meter far from camera. You can see our dataset details (https://universe.roboflow.com/project-qmmac/ksh-handraising-modelling/dataset/3) about the object position and camera angle to set up the correct position for better accuracy. You can test our app, using this test video here [video](https://youtu.be/afrYvmiR9OY?feature=shared)
 - This is our app demo video [video](https://youtu.be/UIZwZPt22dI?feature=shared)
 - This is our ML model link https://universe.roboflow.com/project-qmmac/ksh-handraising-modelling/model/2
 
